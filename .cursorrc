@@ -1,0 +1,36 @@
+{
+  "projectGuidelines": {
+    "componentDesign": {
+      "rules": [
+        "Break down components into smaller, focused units when they exceed 100 lines of code",
+        "Each component should have a single responsibility",
+        "Extract reusable UI elements into separate components",
+        "Keep component state management close to where it's used",
+        "Maintain a clear separation between UI components and business logic"
+      ]
+    },
+    "codeQuality": {
+      "rules": [
+        "Always write TypeScript interfaces for component props",
+        "Document complex business logic with clear comments",
+        "Use meaningful variable and function names that describe their purpose",
+        "Keep functions focused and under 20 lines where possible"
+      ]
+    },
+    "development": {
+      "requirements": [
+        "Ask clarifying questions before implementing new features or making changes",
+        "Create small, testable components that are easy to maintain",
+        "Consider edge cases and error states in component design",
+        "Document any assumptions made during implementation"
+      ]
+    },
+    "examples": {
+      "goodPractices": [
+        "Breaking down CurrencySelector into smaller components like SearchInput, CurrencyList, and CurrencyOption",
+        "Extracting modal logic into a reusable Modal component",
+        "Separating currency conversion logic from UI components"
+      ]
+    }
+  }
+} 
