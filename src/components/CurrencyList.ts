@@ -7,6 +7,7 @@ interface Currency {
   icon?: string;
   isConverter: boolean;
   enabled: boolean;
+  decimals: number;
 }
 
 // Map of currency trading symbols to their icon files
@@ -54,7 +55,8 @@ export const currencies: Currency[] = [
     iAddress: "i5w5MuNik5NtLcYmNzcvaoixooEebB6MGV",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "vETH",
@@ -62,7 +64,8 @@ export const currencies: Currency[] = [
     iAddress: "i9nwxtKuVYX4MSbeULLiK2ttVi6rUEhh4X",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 18
   },
   {
     systemName: "tBTC.vETH",
@@ -70,7 +73,8 @@ export const currencies: Currency[] = [
     iAddress: "iS8TfRPfVpKo5FVfSUzfHBQxo9KuzpnqLU",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "DAI.vETH",
@@ -78,7 +82,8 @@ export const currencies: Currency[] = [
     iAddress: "iGBs4DWztRNvNEJBt4mqHszLxfKTNHTkhM",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 18
   },
   {
     systemName: "MKR.vETH",
@@ -86,7 +91,8 @@ export const currencies: Currency[] = [
     iAddress: "iCkKJuJScy4Z6NSDK7Mt42ZAB2NEnAE1o4",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 18
   },
   {
     systemName: "Bridge.vETH",
@@ -94,7 +100,8 @@ export const currencies: Currency[] = [
     iAddress: "i3f7tSctFkiPpiedY8QR5Tep9p4qDVebDx",
     icon: "#",
     isConverter: true,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "CHIPS",
@@ -102,7 +109,8 @@ export const currencies: Currency[] = [
     iAddress: "iJ3WZocnjG9ufv7GKUA4LijQno5gTMb7tP",
     icon: "#",
     isConverter: false,
-    enabled: false
+    enabled: false,
+    decimals: 8
   },
   {
     systemName: "EURC.vETH",
@@ -110,7 +118,8 @@ export const currencies: Currency[] = [
     iAddress: "iC5TQFrFXSYLQGkiZ8FYmZHFJzaRF5CYgE",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 6
   },
   {
     systemName: "Kaiju",
@@ -118,7 +127,8 @@ export const currencies: Currency[] = [
     iAddress: "i9kVWKU2VwARALpbXn4RS9zvrhvNRaUibb",
     icon: "#",
     isConverter: true,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "Pure",
@@ -126,7 +136,8 @@ export const currencies: Currency[] = [
     iAddress: "iHax5qYQGbcMGqJKKrPorpzUBX2oFFXGnY",
     icon: "#",
     isConverter: true,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "NATI🦉",
@@ -134,7 +145,8 @@ export const currencies: Currency[] = [
     iAddress: "iH37kRsdfoHtHK5TottP1Yfq8hBSHz9btw",
     icon: "#",
     isConverter: true,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "Switch",
@@ -142,7 +154,8 @@ export const currencies: Currency[] = [
     iAddress: "i4Xr5TAMrDTD99H69EemhjDxJ4ktNskUtc",
     icon: "#",
     isConverter: true,
-    enabled: false
+    enabled: false,
+    decimals: 8
   },
   {
     systemName: "SUPERVRSC",
@@ -150,7 +163,8 @@ export const currencies: Currency[] = [
     iAddress: "iHnYAmrS45Hb8GVgyzy7nVQtZ5vttJ9N3X",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "vYIELD",
@@ -158,7 +172,8 @@ export const currencies: Currency[] = [
     iAddress: "iAik7rePReFq2t7LZMZhHCJ52fT5pisJ5C",
     icon: "#",
     isConverter: true,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "Kek🐸",
@@ -166,7 +181,8 @@ export const currencies: Currency[] = [
     iAddress: "iCDjBN71SbSppgsNTpwwMBT69399DpV4hA",
     icon: "#",
     isConverter: true,
-    enabled: false
+    enabled: false,
+    decimals: 8
   },
   {
     systemName: "pepecoin.vETH",
@@ -174,7 +190,8 @@ export const currencies: Currency[] = [
     iAddress: "i5VVBEi6efBrXMaeqFW3MTPSzbmpNLysGR",
     icon: "#",
     isConverter: false,
-    enabled: false
+    enabled: false,
+    decimals: 8
   },
   {
     systemName: "NATI.vETH",
@@ -182,7 +199,8 @@ export const currencies: Currency[] = [
     iAddress: "iL62spNN42Vqdxh8H5nrfNe8d6Amsnfkdx",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "SUPERNET",
@@ -190,7 +208,8 @@ export const currencies: Currency[] = [
     iAddress: "i6SapneNdvpkrLPgqPhDVim7Ljek3h2UQZ",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "vARRR",
@@ -198,7 +217,8 @@ export const currencies: Currency[] = [
     iAddress: "iExBJfZYK7KREDpuhj6PzZBzqMAKaFg7d2",
     icon: "#",
     isConverter: false,
-    enabled: false
+    enabled: false,
+    decimals: 8
   },
   {
     systemName: "vDEX",
@@ -206,7 +226,8 @@ export const currencies: Currency[] = [
     iAddress: "iHog9UCTrn95qpUBFCZ7kKz7qWdMA8MQ6N",
     icon: "#",
     isConverter: false,
-    enabled: false
+    enabled: false,
+    decimals: 8
   },
   {
     systemName: "scrvUSD.vETH",
@@ -214,7 +235,8 @@ export const currencies: Currency[] = [
     iAddress: "i9nLSK4S1U5sVMq4eJUHR1gbFALz56J9Lj",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 18
   },
   {
     systemName: "vUSDC.vETH",
@@ -222,7 +244,8 @@ export const currencies: Currency[] = [
     iAddress: "i61cV2uicKSi1rSMQCBNQeSYC3UAi9GVzd",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 6
   },
   {
     systemName: "vUSDT.vETH",
@@ -230,7 +253,8 @@ export const currencies: Currency[] = [
     iAddress: "i9oCSqKALwJtcv49xUKS2U2i79h1kX6NEY",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: true,
+    decimals: 6
   },
   {
     systemName: "NATI",
@@ -238,7 +262,8 @@ export const currencies: Currency[] = [
     iAddress: "iRt7tpLewArQnRddBVFARGKJStK6w5pDmC",
     icon: "#",
     isConverter: true,
-    enabled: true
+    enabled: true,
+    decimals: 8
   },
   {
     systemName: "Bridge.CHIPS",
@@ -246,7 +271,8 @@ export const currencies: Currency[] = [
     iAddress: "i3nokiCTVevZMLpR3VmZ7YDfCqA5juUqqH",
     icon: "#",
     isConverter: true,
-    enabled: false
+    enabled: false,
+    decimals: 8
   },
   {
     systemName: "Bridge.vDEX",
@@ -254,7 +280,8 @@ export const currencies: Currency[] = [
     iAddress: "i6j1rzjgrDhSmUYiTtp21J8Msiudv5hgt9",
     icon: "#",
     isConverter: true,
-    enabled: false
+    enabled: false,
+    decimals: 8
   },
   {
     systemName: "Bridge.vARRR",
@@ -262,7 +289,8 @@ export const currencies: Currency[] = [
     iAddress: "iD5WRg7jdQM1uuoVHsBCAEKfJCKGs1U3TB",
     icon: "#",
     isConverter: true,
-    enabled: false
+    enabled: false,
+    decimals: 8
   }
 ];
 

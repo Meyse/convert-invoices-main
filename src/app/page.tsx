@@ -30,7 +30,6 @@ export default function Home() {
 
   const [destinationAddress, setDestinationAddress] = useState('');
   const [isAddressValid, setIsAddressValid] = useState(false);
-  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   const [isCreateInvoiceModalOpen, setIsCreateInvoiceModalOpen] = useState(false);
   const [destinationIAddress, setDestinationIAddress] = useState<string | undefined>();
 
@@ -84,7 +83,6 @@ export default function Home() {
         <CreateInvoiceModal
           isOpen={isCreateInvoiceModalOpen}
           onClose={() => setIsCreateInvoiceModalOpen(false)}
-          fromCurrency={fromCurrency}
           toCurrency={toCurrency}
           amount={iDontCareMode ? amount : estimatedAmount}
           destinationAddress={destinationAddress}

@@ -50,9 +50,9 @@ function Tooltip({ children, content }: TooltipProps) {
   );
 }
 
-// Helper function to convert coins to satoshis
-const coinsToSats = (amount: number): BN => {
-  return new BN((amount * 100000000).toString(), 10);
+// Helper function to convert amount to satoshis (8 decimals)
+const toSats = (amount: number): BN => {
+  return new BN(Math.round(amount * 100000000).toString());
 };
 
 export function CreateInvoiceModal({
@@ -151,16 +151,16 @@ export function CreateInvoiceModal({
   const handleCreateInvoice = async () => {
     try {
       const details = new VerusPayInvoiceDetails({
-        amount: coinsToSats(parseFloat(amount)),
+        amount: toSats(parseFloat(amount)),
         destination: new TransferDestination({
           type: destinationIAddress ? DEST_ID : DEST_PKH,
           destination_bytes: destinationIAddress 
             ? fromBase58Check(destinationIAddress).hash 
-            : Buffer.from(destinationAddress)  // Convert R-address string to Buffer
+            : Buffer.from(destinationAddress)
         }),
         requestedcurrencyid: toCurrency?.iAddress || "",
         acceptedsystems: [],
-        maxestimatedslippage: coinsToSats(slippage / 100) // Convert percentage to decimal
+        maxestimatedslippage: toSats(slippage / 100) // Convert percentage to decimal
       });
 
       details.setFlags({
@@ -171,6 +171,7 @@ export function CreateInvoiceModal({
 
       const invoice = new VerusPayInvoice({ details });
       const uri = invoice.toWalletDeeplinkUri();
+      console.log('Generated URI:', uri); // Add logging to help debug
       setQrString(uri);
       setStep('qr');
     } catch (error) {
