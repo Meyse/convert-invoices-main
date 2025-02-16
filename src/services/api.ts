@@ -3,7 +3,17 @@ import { findCurrencyByIAddress, findCurrencyBySystemName } from '@/components/C
 
 const API_URL = 'https://api.verus.services';
 
-async function makeRequest<T>(method: string, params: any[]): Promise<T> {
+interface ApiResponse<T> {
+  result: T;
+  error?: {
+    message: string;
+    code: number;
+  };
+  id: string;
+  jsonrpc: string;
+}
+
+async function makeRequest<T>(method: string, params: unknown[]): Promise<ApiResponse<T>> {
   console.log('Making API request:', { method, params });
   
   try {
@@ -24,7 +34,7 @@ async function makeRequest<T>(method: string, params: any[]): Promise<T> {
       throw new Error(`API request failed: ${response.status} ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const data: ApiResponse<T> = await response.json();
     console.log('API response data:', data);
 
     if (data.error) {
@@ -32,11 +42,11 @@ async function makeRequest<T>(method: string, params: any[]): Promise<T> {
     }
 
     return data;
-  } catch (error: any) {
+  } catch (error) {
     console.error('API request failed:', {
       method,
       params,
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     });
     throw error;
   }
@@ -44,7 +54,8 @@ async function makeRequest<T>(method: string, params: any[]): Promise<T> {
 
 export async function getCurrencyConverters(fromCurrency: string, toCurrency?: string): Promise<ConverterResponse> {
   const params = toCurrency ? [fromCurrency, toCurrency] : [fromCurrency];
-  return makeRequest<ConverterResponse>('getcurrencyconverters', params);
+  const response = await makeRequest<ConverterCurrency[]>('getcurrencyconverters', params);
+  return { result: response.result };
 }
 
 export async function estimateConversion(request: ConversionRequest): Promise<EstimateConversionResponse> {
@@ -55,10 +66,12 @@ export async function estimateConversion(request: ConversionRequest): Promise<Es
   // If either currency is a converter, don't use the via parameter
   if ((fromCurrency?.isConverter || toCurrency?.isConverter) && request.via) {
     const { via, ...requestWithoutVia } = request;
-    return makeRequest<EstimateConversionResponse>('estimateconversion', [requestWithoutVia]);
+    const response = await makeRequest<EstimateConversionResponse['result']>('estimateconversion', [requestWithoutVia]);
+    return { result: response.result };
   }
 
-  return makeRequest<EstimateConversionResponse>('estimateconversion', [request]);
+  const response = await makeRequest<EstimateConversionResponse['result']>('estimateconversion', [request]);
+  return { result: response.result };
 }
 
 interface ConverterPath {
@@ -95,7 +108,7 @@ export function findBestConverter(
   return response.result.reduce<ConverterPath | null>((best, current) => {
     // Skip if the converter itself is disabled
     const converterCurrency = findCurrencyByIAddress(
-      current.lastnotarization.currencystate.reservecurrencies[0].currencyid
+      current.lastnotarization.currencystate.reservecurrencies[0]?.currencyid
     );
     if (!converterCurrency?.enabled) {
       console.log('Skipping disabled converter:', current.fullyqualifiedname);
