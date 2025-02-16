@@ -9,14 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "create-hash": "^1.2.0",
+    "crypto-browserify": "^3.12.1",
+    "lucide-react": "^0.475.0",
     "next": "15.1.7",
     "node-polyfill-webpack-plugin": "^4.1.0",
+    "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "stream-browserify": "^3.0.0",
+    "verus-typescript-primitives": "https://github.com/VerusCoin/verus-typescript-primitives.git",
     "verusid-ts-client": "https://github.com/VerusCoin/verusid-ts-client.git"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/bn.js": "^5.1.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

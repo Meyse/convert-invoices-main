@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Currency, currencies } from '@/components/CurrencyList';
+import { Currency, currencies, findCurrencyBySystemName } from '@/components/CurrencyList';
 import { getCurrencyConverters, estimateConversion, findBestConverter } from '@/services/api';
 import { ConversionRequest } from '@/types/api';
 
@@ -18,12 +18,16 @@ import { ConversionRequest } from '@/types/api';
  * - isLoadingEstimate: Loading state for conversion estimate
  * - liquidityExceeded: Whether the conversion exceeds available liquidity
  * - maxAvailableAmount: Maximum amount available for conversion
+ * - iDontCareMode: Whether the conversion is in "I don't care" mode
  * - setFromCurrency: Function to update source currency
  * - setToCurrency: Function to update target currency
  * - setAmount: Function to update conversion amount
+ * - toggleIDontCareMode: Function to toggle "I don't care" mode
  */
 export function useCurrencyConversion() {
-  const [fromCurrency, setFromCurrency] = useState<Currency | undefined>();
+  // Initialize with ETH as the default 'from' currency
+  const defaultFromCurrency = findCurrencyBySystemName('vETH');
+  const [fromCurrency, setFromCurrency] = useState<Currency | undefined>(defaultFromCurrency);
   const [toCurrency, setToCurrency] = useState<Currency | undefined>();
   const [amount, setAmount] = useState('');
   const [estimatedAmount, setEstimatedAmount] = useState('');
@@ -33,13 +37,25 @@ export function useCurrencyConversion() {
   const [isLoadingEstimate, setIsLoadingEstimate] = useState(false);
   const [liquidityExceeded, setLiquidityExceeded] = useState(false);
   const [maxAvailableAmount, setMaxAvailableAmount] = useState<number>();
+  const [iDontCareMode, setIDontCareMode] = useState(false);
 
   // Handle from currency change
   const handleFromCurrencyChange = (currency: Currency) => {
+    if (iDontCareMode) return; // Prevent changes in "I don't care" mode
     console.log('From currency changed to:', currency);
     setFromCurrency(currency);
     setToCurrency(undefined);
     setEstimatedAmount('');
+  };
+
+  // Toggle "I don't care" mode
+  const toggleIDontCareMode = () => {
+    setIDontCareMode(!iDontCareMode);
+    if (!iDontCareMode) {
+      // Entering "I don't care" mode
+      setAmount('');
+      setEstimatedAmount('');
+    }
   };
 
   // Fetch available "to" currencies
@@ -176,8 +192,10 @@ export function useCurrencyConversion() {
     isLoadingEstimate,
     liquidityExceeded,
     maxAvailableAmount,
+    iDontCareMode,
     setFromCurrency: handleFromCurrencyChange,
     setToCurrency,
-    setAmount
+    setAmount,
+    toggleIDontCareMode,
   };
 } 

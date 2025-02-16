@@ -6,24 +6,35 @@ export function AmountInput({
   onChange,
   isOutput,
   estimatedAmount,
-  isLoading
+  isLoading,
+  isDisabled
 }: AmountInputProps) {
   if (isLoading && (isOutput || !amount)) {
     return (
       <div className="animate-pulse">
-        <div className="h-8 bg-[#131A2A] rounded w-24"></div>
+        <div className="h-8 bg-[#282B33] rounded w-24"></div>
       </div>
     );
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!onChange || isDisabled) return;
+    
+    // Replace comma with dot
+    const value = e.target.value.replace(',', '.');
+    onChange(value);
+  };
+
   return (
     <input
       type="text"
-      className="w-full bg-transparent text-2xl text-white outline-none"
+      className={`w-full bg-transparent text-3xl outline-none ${
+        isDisabled ? 'text-[#5D6785] cursor-not-allowed' : 'text-white'
+      }`}
       placeholder="0"
       value={isOutput ? estimatedAmount : amount}
-      onChange={e => onChange?.(e.target.value)}
-      readOnly={isOutput}
+      onChange={handleInputChange}
+      readOnly={isOutput || isDisabled}
     />
   );
 } 

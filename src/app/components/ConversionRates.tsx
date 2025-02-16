@@ -1,5 +1,6 @@
 import React from 'react';
 import { Currency } from '@/components/CurrencyList';
+import { Coins, ArrowRightLeft } from 'lucide-react';
 
 /**
  * Props for the ConversionRates component
@@ -32,16 +33,28 @@ export function ConversionRates({
   if (!fromCurrency || !toCurrency || !amount || !estimatedAmount) return null;
 
   return (
-    <div className="mt-2">
+    <div className="mt-4 bg-[#090A0E] rounded-lg p-4">
       {conversionFee !== undefined && amount && (
-        <div className="text-xs text-[#5D6785] text-right">
-          Fee: {conversionFee.toFixed(8)} {fromCurrency.tradingSymbol} ({(conversionFee / parseFloat(amount) * 100).toFixed(3)}%)
+        <div className="flex items-center justify-between text-sm text-[#5D6785] mb-3 pb-3 border-b border-[#1B2030]">
+          <div className="flex items-center gap-2">
+            <Coins size={16} className="text-[#5D6785]" />
+            <span>Network Fee</span>
+          </div>
+          <div>
+            {conversionFee.toFixed(8)} {fromCurrency.tradingSymbol} ({(conversionFee / parseFloat(amount) * 100).toFixed(3)}%)
+          </div>
         </div>
       )}
 
       {amount && estimatedAmount && (
-        <div className="text-xs text-[#5D6785] mt-1 text-right">
-          Rate: 1 {toCurrency.tradingSymbol} = {(parseFloat(amount) / parseFloat(estimatedAmount)).toFixed(8)} {fromCurrency.tradingSymbol}
+        <div className="flex items-center justify-between text-sm text-[#5D6785]">
+          <div className="flex items-center gap-2">
+            <ArrowRightLeft size={16} className="text-[#5D6785]" />
+            <span>Exchange Rate</span>
+          </div>
+          <div>
+            1 {toCurrency.tradingSymbol} = {(parseFloat(amount) / parseFloat(estimatedAmount)).toFixed(8)} {fromCurrency.tradingSymbol}
+          </div>
         </div>
       )}
     </div>

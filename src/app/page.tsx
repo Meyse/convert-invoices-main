@@ -1,10 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
+import '@/buffer-polyfill';
 import { Currency, findCurrencyBySystemName } from '@/components/CurrencyList';
 import { FrequentPairs } from './components/FrequentPairs';
 import { ConversionForm } from './components/ConversionForm';
 import { useCurrencyConversion } from './hooks/useCurrencyConversion';
+import { QRModal } from './components/QRModal';
+import { BackgroundGradient } from './components/BackgroundGradient';
+import { CreateInvoiceModal } from './components/CreateInvoiceModal';
 
 export default function Home() {
   const {
@@ -18,13 +22,18 @@ export default function Home() {
     isLoadingEstimate,
     liquidityExceeded,
     maxAvailableAmount,
+    iDontCareMode,
     setFromCurrency,
     setToCurrency,
-    setAmount
+    setAmount,
+    toggleIDontCareMode
   } = useCurrencyConversion();
 
   const [destinationAddress, setDestinationAddress] = useState('');
   const [isAddressValid, setIsAddressValid] = useState(false);
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+  const [isCreateInvoiceModalOpen, setIsCreateInvoiceModalOpen] = useState(false);
+  const [destinationIAddress, setDestinationIAddress] = useState<string>();
 
   const handleFrequentPairSelect = (fromCurr: Currency, toCurr: Currency) => {
     setFromCurrency(fromCurr);
@@ -32,38 +41,71 @@ export default function Home() {
   };
 
   const handleSubmit = () => {
-    // TODO: Implement form submission
-    console.log('Form submitted');
+    setIsCreateInvoiceModalOpen(true);
+  };
+
+  const handleIAddressFound = (iAddress: string) => {
+    setDestinationIAddress(iAddress);
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-8 bg-[#0F1013]">
-      <h1 className="text-[48px] font-medium text-white mb-8 text-center leading-[56px]">
-        Quick Invoices to<br />Use & Share
-      </h1>
+    <>
+      <BackgroundGradient />
+      <main className="relative flex min-h-screen flex-col items-center p-8 bg-[#0F1013]/95">
 
-      <FrequentPairs onSelect={handleFrequentPairSelect} />
 
-      <ConversionForm
-        fromCurrency={fromCurrency}
-        toCurrency={toCurrency}
-        amount={amount}
-        estimatedAmount={estimatedAmount}
-        conversionFee={conversionFee}
-        availableToTokens={availableToTokens}
-        isLoadingAvailableTokens={isLoadingAvailableTokens}
-        isLoadingEstimate={isLoadingEstimate}
-        liquidityExceeded={liquidityExceeded}
-        maxAvailableAmount={maxAvailableAmount}
-        destinationAddress={destinationAddress}
-        isAddressValid={isAddressValid}
-        onFromCurrencyChange={setFromCurrency}
-        onToCurrencyChange={setToCurrency}
-        onAmountChange={setAmount}
-        onAddressChange={setDestinationAddress}
-        onAddressValidityChange={setIsAddressValid}
-        onSubmit={handleSubmit}
-      />
-    </main>
+
+
+
+        <h1 className="text-[48px] tracking-tight text-white mb-8 text-center leading-[56px]">
+          Quick Invoices to<br />Use & Share
+        </h1>
+
+        <FrequentPairs onSelect={handleFrequentPairSelect} />
+
+        <ConversionForm
+          fromCurrency={fromCurrency}
+          toCurrency={toCurrency}
+          amount={amount}
+          estimatedAmount={estimatedAmount}
+          conversionFee={conversionFee}
+          availableToTokens={availableToTokens}
+          isLoadingAvailableTokens={isLoadingAvailableTokens}
+          isLoadingEstimate={isLoadingEstimate}
+          liquidityExceeded={liquidityExceeded}
+          maxAvailableAmount={maxAvailableAmount}
+          destinationAddress={destinationAddress}
+          isAddressValid={isAddressValid}
+          onFromCurrencyChange={setFromCurrency}
+          onToCurrencyChange={setToCurrency}
+          onAmountChange={setAmount}
+          onAddressChange={setDestinationAddress}
+          onAddressValidityChange={setIsAddressValid}
+          onSubmit={handleSubmit}
+          iDontCareMode={iDontCareMode}
+          onToggleIDontCare={toggleIDontCareMode}
+          onIAddressFound={handleIAddressFound}
+        />
+
+        <QRModal
+          isOpen={isQRModalOpen}
+          onClose={() => setIsQRModalOpen(false)}
+        />
+
+        <CreateInvoiceModal
+          isOpen={isCreateInvoiceModalOpen}
+          onClose={() => setIsCreateInvoiceModalOpen(false)}
+          fromCurrency={fromCurrency}
+          toCurrency={toCurrency}
+          amount={iDontCareMode ? amount : estimatedAmount}
+          destinationAddress={destinationAddress}
+          destinationIAddress={destinationIAddress}
+          liquidityInfo={{
+            maxAvailableAmount,
+            conversionPath: [] // TODO: Add conversion path from API
+          }}
+        />
+      </main>
+    </>
   );
 }

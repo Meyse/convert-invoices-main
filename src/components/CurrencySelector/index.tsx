@@ -3,6 +3,7 @@ import { CurrencySelectorProps } from './types';
 import { AmountInput } from './components/AmountInput';
 import { CurrencyModal } from './components/CurrencyModal';
 import Image from 'next/image';
+import { getCurrencyIcon } from '@/components/CurrencyList';
 
 export default function CurrencySelector({
   label,
@@ -14,19 +15,49 @@ export default function CurrencySelector({
   estimatedAmount,
   isOutput = false,
   isLoading = false,
-  variant = 'buy'
+  variant = 'buy',
+  iDontCareMode = false,
+  onToggleIDontCare,
 }: CurrencySelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const isDisabled = !isOutput && iDontCareMode;
+  const showIDontCareButton = !isOutput && onToggleIDontCare;
+
   const buttonStyles = variant === 'sell' || selectedCurrency
-    ? "flex items-center gap-2 bg-[#090A0E] border border-[#2B2A2A] hover:bg-[#1B1E23]/80 rounded-[20px] px-3 py-2"
-    : "flex items-center gap-2 bg-[#3165D4] hover:bg-[#3165D4] rounded-[20px] px-3 py-2";
+    ? `flex items-center gap-2 bg-[#090A0E] border border-[#2B2A2A] hover:bg-[#1B1E23]/80 rounded-[20px] px-3 py-2 ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`
+    : `flex items-center gap-2 bg-[#3165D4] hover:bg-[#3165D4] rounded-[20px] px-3 py-2 ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`;
+
+  if (isDisabled) {
+    return (
+      <div className="p-4">
+        <div className="flex justify-end">
+          <button
+            onClick={() => onToggleIDontCare?.()}
+            className="text-xs text-[#5D6785] hover:text-white transition-colors"
+          >
+            Show again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
-      <label className="text-sm text-[#5D6785] mb-2 block">
-        {label}
-      </label>
+      <div className="flex justify-between items-center mb-2">
+        <label className="text-sm text-[#5D6785]">
+          {label}
+        </label>
+        {showIDontCareButton && (
+          <button
+            onClick={() => onToggleIDontCare?.()}
+            className="text-xs text-[#5D6785] hover:text-white transition-colors"
+          >
+            Don't show
+          </button>
+        )}
+      </div>
       <div className="flex gap-2">
         <div className="flex-1">
           <AmountInput
@@ -35,19 +66,29 @@ export default function CurrencySelector({
             estimatedAmount={estimatedAmount}
             isOutput={isOutput}
             isLoading={isLoading}
+            isDisabled={isDisabled}
           />
         </div>
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => !isDisabled && setIsOpen(true)}
           className={buttonStyles}
+          disabled={isDisabled}
         >
           {selectedCurrency ? (
             <>
-              <div className="w-6 h-6 bg-gray-600 rounded-full"></div>
+              <div className="relative w-6 h-6 rounded-full overflow-hidden bg-[#131A2A] flex items-center justify-center">
+                <Image
+                  src={getCurrencyIcon(selectedCurrency)}
+                  alt={`${selectedCurrency.tradingSymbol} icon`}
+                  width={24}
+                  height={24}
+                  className="object-contain"
+                />
+              </div>
               <span className="text-white">{selectedCurrency.tradingSymbol}</span>
             </>
           ) : (
-            <span className="text-white">Select token</span>
+            <span className="text-white">Select currency</span>
           )}
           <Image
             src="/chevron.svg"

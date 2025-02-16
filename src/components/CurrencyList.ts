@@ -1,3 +1,5 @@
+import type { NextConfig } from "next";
+
 interface Currency {
   systemName: string;
   tradingSymbol: string;
@@ -6,6 +8,35 @@ interface Currency {
   isConverter: boolean;
   enabled: boolean;
 }
+
+// Map of currency trading symbols to their icon files
+const currencyIconMap: Record<string, string> = {
+  'VRSC': '/icons/currencies/verus-icon-blue.svg',
+  'ETH': '/icons/currencies/eth.png',
+  'DAI': '/icons/currencies/dai.svg',
+  'TBTC': '/icons/currencies/tbtc.svg',
+  'MKR': '/icons/currencies/mkr.png',
+  'PURE': '/icons/currencies/pure.svg',
+  'Bridge.vETH': '/icons/currencies/bridgeveth.svg',
+  'Pure': '/icons/currencies/pure.svg',
+  'Switch': '/icons/currencies/switch.svg',
+};
+
+// Function to get the icon path for a currency
+export const getCurrencyIcon = (currency: Currency): string => {
+  // First try exact match on systemName
+  if (currencyIconMap[currency.systemName]) {
+    return currencyIconMap[currency.systemName];
+  }
+  
+  // Then try match on tradingSymbol
+  if (currencyIconMap[currency.tradingSymbol]) {
+    return currencyIconMap[currency.tradingSymbol];
+  }
+  
+  // Return placeholder if no icon found
+  return '/icons/currencies/placeholder.svg';
+};
 
 // Helper function to get only enabled currencies
 export const getEnabledCurrencies = () => currencies.filter(c => c.enabled);

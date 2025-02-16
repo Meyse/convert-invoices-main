@@ -1,4 +1,4 @@
-import { Currency } from '../CurrencyList';
+import { Currency } from '@/components/CurrencyList';
 
 export interface CurrencySelectorProps {
   label: string;
@@ -11,6 +11,8 @@ export interface CurrencySelectorProps {
   isOutput?: boolean;
   isLoading?: boolean;
   variant?: 'sell' | 'buy';
+  iDontCareMode?: boolean;
+  onToggleIDontCare?: () => void;
 }
 
 export interface SearchInputProps {
@@ -43,4 +45,5 @@ export interface AmountInputProps {
   isOutput?: boolean;
   estimatedAmount?: string;
   isLoading?: boolean;
+  isDisabled?: boolean;
 } 

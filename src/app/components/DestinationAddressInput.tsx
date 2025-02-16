@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { CheckCircle2, XCircle } from 'lucide-react';
 
 /**
  * Props for the DestinationAddressInput component
@@ -10,6 +11,39 @@ interface DestinationAddressInputProps {
   onChange: (value: string) => void;
   /** Callback when the address validity changes */
   onValidityChange: (isValid: boolean) => void;
+  /** Callback when an i-address is found */
+  onIAddressFound?: (iAddress: string) => void;
+}
+
+async function validateVerusId(verusId: string): Promise<{ isValid: boolean; iAddress?: string }> {
+  try {
+    const response = await fetch('https://api.verus.services', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 'validation',
+        method: 'getidentity',
+        params: [verusId]
+      })
+    });
+
+    const data = await response.json();
+    
+    if (data.error) {
+      return { isValid: false };
+    }
+
+    return {
+      isValid: true,
+      iAddress: data.result.identity.identityaddress
+    };
+  } catch (error) {
+    console.error('Error validating VerusID:', error);
+    return { isValid: false };
+  }
 }
 
 /**
@@ -20,25 +54,94 @@ interface DestinationAddressInputProps {
 export function DestinationAddressInput({
   value,
   onChange,
-  onValidityChange
+  onValidityChange,
+  onIAddressFound
 }: DestinationAddressInputProps) {
+  const [isValidating, setIsValidating] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+  const [showValidation, setShowValidation] = useState(false);
+  const [lastValidatedValue, setLastValidatedValue] = useState('');
+
+  // Memoize validation function to prevent unnecessary re-renders
+  const validate = useCallback(async (address: string) => {
+    // Skip validation if we've already validated this address
+    if (address === lastValidatedValue) return;
+    
+    if (!address) {
+      setIsValid(false);
+      setShowValidation(false);
+      onValidityChange(false);
+      return;
+    }
+
+    // Skip API validation if it's a regular R-address
+    if (address.length === 34) {
+      setIsValid(true);
+      setShowValidation(true);
+      onValidityChange(true);
+      setLastValidatedValue(address);
+      return;
+    }
+
+    // Only validate VerusIDs with API
+    if (address.endsWith('@')) {
+      setIsValidating(true);
+      setShowValidation(true);
+      
+      const { isValid, iAddress } = await validateVerusId(address);
+      
+      if (isValid && iAddress) {
+        setIsValid(true);
+        onValidityChange(true);
+        onIAddressFound?.(iAddress);
+      } else {
+        setIsValid(false);
+        onValidityChange(false);
+      }
+      
+      setIsValidating(false);
+      setLastValidatedValue(address);
+    }
+  }, [onValidityChange, onIAddressFound, lastValidatedValue]);
+
+  // Immediate UI feedback
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    onChange(newValue);
+
+    // Immediately hide validation when user starts editing
+    if (newValue.length < 34 && !newValue.endsWith('@')) {
+      setShowValidation(false);
+      setIsValid(false);
+      onValidityChange(false);
+    }
+  };
+
   useEffect(() => {
-    const isValid = Boolean(value) && (
-      value.length === 34 || // R-address
-      value.endsWith('@')    // VerusID
-    );
-    onValidityChange(isValid);
-  }, [value, onValidityChange]);
+    const timeoutId = setTimeout(() => validate(value), 500);
+    return () => clearTimeout(timeoutId);
+  }, [value, validate]);
 
   return (
     <div className="mt-8">
-      <input
-        type="text"
-        className="w-full bg-[#090A0E] text-white p-4 rounded-[20px] border border-[#2B2A2A] placeholder-[#5D6785]"
-        placeholder="Enter R-address or VerusID"
-        value={value}
-        onChange={e => onChange(e.target.value)}
-      />
+      <div className="relative">
+        <input
+          type="text"
+          className="w-full bg-[#090A0E] text-white p-4 pr-12 rounded-[20px] border border-[#2B2A2A] placeholder-[#5D6785]"
+          placeholder="Enter R-address or VerusID"
+          value={value}
+          onChange={handleInputChange}
+        />
+        {showValidation && !isValidating && (
+          <div className="absolute right-4 top-1/2 -translate-y-1/2">
+            {isValid ? (
+              <CheckCircle2 className="w-5 h-5 text-green-500" />
+            ) : (
+              <XCircle className="w-5 h-5 text-red-500" />
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 } 
