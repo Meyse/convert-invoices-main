@@ -35,9 +35,9 @@ export function ConversionRates({
   return (
     <div className="mt-4 bg-[#090A0E] rounded-lg p-4">
       {conversionFee !== undefined && amount && (
-        <div className="flex items-center justify-between text-sm text-[#5D6785] mb-3 pb-3 border-b border-[#1B2030]">
+        <div className="flex items-center justify-between text-sm text-[#838A9E] mb-3 pb-3 border-b border-[#1B2030]">
           <div className="flex items-center gap-2">
-            <Coins size={16} className="text-[#5D6785]" />
+            <Coins size={16} className="text-[#838A9E]" />
             <span>Network Fee</span>
           </div>
           <div>
@@ -47,9 +47,9 @@ export function ConversionRates({
       )}
 
       {amount && estimatedAmount && (
-        <div className="flex items-center justify-between text-sm text-[#5D6785]">
+        <div className="flex items-center justify-between text-sm text-[#838A9E]">
           <div className="flex items-center gap-2">
-            <ArrowRightLeft size={16} className="text-[#5D6785]" />
+            <ArrowRightLeft size={16} className="text-[#838A9E]" />
             <span>Exchange Rate</span>
           </div>
           <div>

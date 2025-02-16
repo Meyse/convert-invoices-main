@@ -29,7 +29,7 @@ export function AmountInput({
     <input
       type="text"
       className={`w-full bg-transparent text-3xl outline-none truncate ${
-        isDisabled ? 'text-[#5D6785] cursor-not-allowed' : 'text-white'
+        isDisabled ? 'text-[#838A9E] cursor-not-allowed' : 'text-white'
       }`}
       placeholder="0"
       value={isOutput ? estimatedAmount : amount}

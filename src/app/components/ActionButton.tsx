@@ -47,7 +47,7 @@ export function ActionButton({
       onClick={onClick}
       className={`w-full mt-4 py-4 px-4 rounded-[20px] font-medium text-[20px] ${
         isDisabled
-          ? 'bg-[#22242A] text-[#5D6785] cursor-not-allowed'
+          ? 'bg-[#22242A] text-[#838A9E] cursor-not-allowed'
           : 'bg-[#3165D4] hover:bg-[#3165D4]/90 text-white'
       }`}
     >

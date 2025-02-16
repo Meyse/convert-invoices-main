@@ -22,7 +22,7 @@ export function CurrencyOption({ currency, onSelect }: CurrencyOptionProps) {
       </div>
       <div className="text-left">
         <div className="text-white">{currency.tradingSymbol}</div>
-        <div className="text-sm text-[#5D6785]">{currency.systemName}</div>
+        <div className="text-sm text-[#838A9E]">{currency.systemName}</div>
       </div>
     </button>
   );

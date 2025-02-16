@@ -131,7 +131,7 @@ export function DestinationAddressInput({
       <div className="relative">
         <input
           type="text"
-          className="w-full bg-[#090A0E] text-white p-4 pr-12 rounded-[20px] border border-[#2B2A2A] placeholder-[#5D6785]"
+          className="w-full bg-[#090A0E] text-white p-4 pr-12 rounded-[20px] border border-[#2B2A2A] placeholder-[#838A9E]"
           placeholder="Enter R-address or VerusID"
           value={value}
           onChange={handleInputChange}

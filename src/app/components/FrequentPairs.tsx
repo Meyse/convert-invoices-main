@@ -37,7 +37,7 @@ export function FrequentPairs({ onSelect }: FrequentPairsProps) {
         return (
           <button
             key={`${pair.from}-${pair.to}`}
-            className="flex items-center gap-1 bg-[#090A0E] border border-[#2B2A2A] hover:border-[#ffffff]/50 rounded-[16px] px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm text-[#5D6785] hover:text-white shrink-0"
+            className="flex items-center gap-1 bg-[#090A0E] border border-[#2B2A2A] hover:border-[#ffffff]/50 rounded-[16px] px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm text-[#838A9E] hover:text-white shrink-0"
             onClick={() => onSelect(fromCurr, toCurr)}
           >
             {pair.from} → {pair.to}

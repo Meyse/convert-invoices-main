@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     url: "https://verusinvoices.com",
     images: [
       {
-        url: "public/og-image.png",
+        url: "https://www.imgdumper.nl/uploads9/67b1f59314a4e/67b1f5926aa59-og-image.png",
         width: 1200,
         height: 630,
         alt: "Verus Invoice Generator Preview"
@@ -45,8 +45,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Create Verus Crypto Invoices | Easy Payment Sharing",
     description: "Generate and share cryptocurrency payment invoices easily. Support for multiple currencies, QR codes, and direct Verus Mobile integration.",
-    images: ["public/og-image.png.jpg"],
-    creator: "@M_eysee",
+    images: ["https://www.imgdumper.nl/uploads9/67b1f59314a4e/67b1f5926aa59-og-image.png"],
+    creator: "@M_eyse",
     site: "@VerusCoin"
   },
   robots: {

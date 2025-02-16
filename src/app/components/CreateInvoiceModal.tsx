@@ -211,12 +211,12 @@ export function CreateInvoiceModal({
     ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
 
     // Add text with larger fonts
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = '#838A9E';
     ctx.textAlign = 'center';
     ctx.font = 'bold 30px Inter, system-ui, sans-serif';
     ctx.fillText(`${amount} ${toCurrency?.tradingSymbol}`, canvas.width/2, 520);
 
-    ctx.fillStyle = '#5D6785';
+    ctx.fillStyle = '#838A9E';
     ctx.font = '24px Inter, system-ui, sans-serif';
     ctx.fillText('to', canvas.width/2, 570);
 
@@ -228,7 +228,7 @@ export function CreateInvoiceModal({
       ctx.fillText(destinationAddress, canvas.width/2, 620);
 
       // Draw i-address below in smaller, lighter text
-      ctx.fillStyle = '#5D6785';
+      ctx.fillStyle = '#838A9E';
       ctx.font = '21px Inter, system-ui, sans-serif';
       const words = destinationIAddress?.match(/.{1,30}/g) || [];
       let y = 660;
@@ -265,7 +265,7 @@ export function CreateInvoiceModal({
             {step === 'qr' && (
               <button
                 onClick={() => setStep('review')}
-                className="text-[#5D6785] hover:text-white"
+                className="text-[#838A9E] hover:text-white"
               >
                 ← Back
               </button>
@@ -276,7 +276,7 @@ export function CreateInvoiceModal({
           </div>
           <button 
             onClick={handleClose}
-            className="text-[#5D6785] hover:text-white"
+            className="text-[#838A9E] hover:text-white"
           >
             ✕
           </button>
@@ -286,17 +286,17 @@ export function CreateInvoiceModal({
           <div className="space-y-6">
             <div className="space-y-4">
               <div className="bg-[#090A0E] p-4 rounded-lg">
-                <div className="text-[#5D6785] text-sm mb-1">Destination</div>
+                <div className="text-[#838A9E] text-sm mb-1">Destination</div>
                 <div className="text-white break-all">{destinationAddress}</div>
                 {destinationIAddress && (
-                  <div className="text-[#5D6785] text-xs mt-1 break-all">
+                  <div className="text-[#838A9E] text-xs mt-1 break-all">
                     {destinationIAddress}
                   </div>
                 )}
               </div>
 
               <div className="bg-[#090A0E] p-4 rounded-lg">
-                <div className="text-[#5D6785] text-sm mb-1">Amount</div>
+                <div className="text-[#838A9E] text-sm mb-1">Amount</div>
                 <div className="text-white">
                   {amount} {toCurrency?.tradingSymbol}
                 </div>
@@ -305,9 +305,9 @@ export function CreateInvoiceModal({
               <div className="bg-[#090A0E] p-4 rounded-lg">
                 <div className="flex justify-between items-center mb-2">
                   <div className="flex items-center gap-2">
-                    <div className="text-[#5D6785] text-sm">Maximum Slippage</div>
+                    <div className="text-[#838A9E] text-sm">Maximum Slippage</div>
                     <Tooltip content="Maximum allowed difference between estimated and actual conversion outcome. Higher values may be needed for larger trades due to their impact on available liquidity.">
-                      <HelpCircle size={14} className="text-[#5D6785]" />
+                      <HelpCircle size={14} className="text-[#838A9E]" />
                     </Tooltip>
                   </div>
                   <div className="text-white">{slippage}%</div>
@@ -320,7 +320,7 @@ export function CreateInvoiceModal({
                   step={0.5}
                 />
                 <div className="flex justify-between items-center mt-2">
-                  <div className="text-[#5D6785] text-xs">
+                  <div className="text-[#838A9E] text-xs">
                     Suggested: {suggestedSlippage}%
                   </div>
                   {priceImpact !== null && (
@@ -351,13 +351,13 @@ export function CreateInvoiceModal({
               <div className="text-white text-lg font-medium">
                 {amount} {toCurrency?.tradingSymbol}
               </div>
-              <div className="text-[#5D6785] text-sm">to</div>
+              <div className="text-[#838A9E] text-sm">to</div>
               {destinationAddress.endsWith('@') ? (
                 <div className="flex flex-col items-center gap-1">
                   <div className="text-white text-base font-medium">
                     {destinationAddress}
                   </div>
-                  <div className="text-[#5D6785] text-sm break-all">
+                  <div className="text-[#838A9E] text-sm break-all">
                     {destinationIAddress}
                   </div>
                 </div>

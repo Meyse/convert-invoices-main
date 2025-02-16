@@ -34,7 +34,7 @@ export default function CurrencySelector({
         <div className="flex justify-end">
           <button
             onClick={() => onToggleIDontCare?.()}
-            className="text-xs text-[#5D6785] hover:text-white transition-colors"
+            className="text-xs text-[#838A9E] hover:text-white transition-colors"
           >
             Show again
           </button>
@@ -46,13 +46,13 @@ export default function CurrencySelector({
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-2">
-        <label className="text-sm text-[#5D6785]">
+        <label className="text-sm text-[#838A9E]">
           {label}
         </label>
         {showIDontCareButton && (
           <button
             onClick={() => onToggleIDontCare?.()}
-            className="text-xs text-[#5D6785] hover:text-white transition-colors"
+            className="text-xs text-[#838A9E] hover:text-white transition-colors"
           >
             Don't show
           </button>

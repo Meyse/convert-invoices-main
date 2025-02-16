@@ -23,7 +23,7 @@ export function Slider({ value, onChange, min, max, step }: SliderProps) {
           background: `linear-gradient(to right, #3165D4 0%, #3165D4 ${(value - min) / (max - min) * 100}%, #131A2A ${(value - min) / (max - min) * 100}%, #131A2A 100%)`
         }}
       />
-      <div className="flex justify-between text-xs text-[#5D6785] mt-2">
+      <div className="flex justify-between text-xs text-[#838A9E] mt-2">
         <span>{min}%</span>
         <span>{max}%</span>
       </div>
