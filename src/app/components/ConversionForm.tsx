@@ -51,7 +51,7 @@ interface ConversionFormProps {
   /** Callback to toggle "I don't care" mode */
   onToggleIDontCare?: () => void;
   /** Callback when an i-address is found for a VerusID */
-  onIAddressFound?: (iAddress: string) => void;
+  onIAddressFound?: (iAddress: string | undefined) => void;
 }
 
 /**
@@ -166,6 +166,7 @@ export function ConversionForm({
         amount={amount}
         isAddressValid={isAddressValid}
         liquidityExceeded={liquidityExceeded}
+        iDontCareMode={iDontCareMode || false}
         onClick={onSubmit}
       />
     </div>

@@ -32,7 +32,7 @@ export default function Home() {
   const [isAddressValid, setIsAddressValid] = useState(false);
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   const [isCreateInvoiceModalOpen, setIsCreateInvoiceModalOpen] = useState(false);
-  const [destinationIAddress, setDestinationIAddress] = useState<string>();
+  const [destinationIAddress, setDestinationIAddress] = useState<string | undefined>();
 
   const handleFrequentPairSelect = (fromCurr: Currency, toCurr: Currency) => {
     setFromCurrency(fromCurr);
@@ -43,7 +43,7 @@ export default function Home() {
     setIsCreateInvoiceModalOpen(true);
   };
 
-  const handleIAddressFound = (iAddress: string) => {
+  const handleIAddressFound = (iAddress: string | undefined) => {
     setDestinationIAddress(iAddress);
   };
 

@@ -11,8 +11,8 @@ interface DestinationAddressInputProps {
   onChange: (value: string) => void;
   /** Callback when the address validity changes */
   onValidityChange: (isValid: boolean) => void;
-  /** Callback when an i-address is found */
-  onIAddressFound?: (iAddress: string) => void;
+  /** Callback when an i-address is found or cleared */
+  onIAddressFound?: (iAddress: string | undefined) => void;
 }
 
 async function validateVerusId(verusId: string): Promise<{ isValid: boolean; iAddress?: string }> {
@@ -64,9 +64,6 @@ export function DestinationAddressInput({
 
   // Memoize validation function to prevent unnecessary re-renders
   const validate = useCallback(async (address: string) => {
-    // Skip validation if we've already validated this address
-    if (address === lastValidatedValue) return;
-    
     if (!address) {
       setIsValid(false);
       setShowValidation(false);
@@ -79,7 +76,6 @@ export function DestinationAddressInput({
       setIsValid(true);
       setShowValidation(true);
       onValidityChange(true);
-      setLastValidatedValue(address);
       return;
     }
 
@@ -100,19 +96,27 @@ export function DestinationAddressInput({
       }
       
       setIsValidating(false);
-      setLastValidatedValue(address);
+    } else {
+      setIsValid(false);
+      setShowValidation(address.length > 0);
+      onValidityChange(false);
     }
-  }, [onValidityChange, onIAddressFound, lastValidatedValue]);
+  }, [onValidityChange, onIAddressFound]);
 
   // Immediate UI feedback
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     onChange(newValue);
 
-    // Immediately hide validation when user starts editing
-    if (newValue.length < 34 && !newValue.endsWith('@')) {
-      setShowValidation(false);
+    // Show validation immediately for R-addresses
+    if (newValue.length === 34) {
+      setIsValid(true);
+      setShowValidation(true);
+      onValidityChange(true);
+      onIAddressFound?.(undefined); // Clear any stored i-address
+    } else {
       setIsValid(false);
+      setShowValidation(newValue.length > 0);
       onValidityChange(false);
     }
   };

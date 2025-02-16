@@ -53,8 +53,19 @@ export function useCurrencyConversion() {
     setIDontCareMode(!iDontCareMode);
     if (!iDontCareMode) {
       // Entering "I don't care" mode
+      setFromCurrency(undefined);  // Clear the from currency
       setAmount('');
       setEstimatedAmount('');
+      setConversionFee(undefined);  // Also clear the conversion fee
+      setLiquidityExceeded(false);  // Reset liquidity state
+      setMaxAvailableAmount(undefined);  // Clear max amount
+    } else {
+      // Exiting "don't care" mode (showing "you send" again)
+      setToCurrency(undefined);  // Clear the to currency for a fresh start
+      setEstimatedAmount('');
+      setConversionFee(undefined);
+      setLiquidityExceeded(false);
+      setMaxAvailableAmount(undefined);
     }
   };
 

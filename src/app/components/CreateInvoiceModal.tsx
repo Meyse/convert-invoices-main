@@ -156,9 +156,9 @@ export function CreateInvoiceModal({
         amount: coinsToSats(parseFloat(amount)),
         destination: new TransferDestination({
           type: destinationIAddress ? DEST_ID : DEST_PKH,
-          destination_bytes: fromBase58Check(
-            destinationIAddress || destinationAddress
-          ).hash
+          destination_bytes: destinationIAddress 
+            ? fromBase58Check(destinationIAddress).hash 
+            : Buffer.from(destinationAddress)  // Convert R-address string to Buffer
         }),
         requestedcurrencyid: toCurrency?.iAddress || "",
         acceptedsystems: [],
@@ -186,8 +186,8 @@ export function CreateInvoiceModal({
     if (!ctx) return;
 
     // Set canvas size with 1.5x resolution
-    canvas.width = 600; // Was 400
-    canvas.height = 750; // Was 500
+    canvas.width = 600;
+    canvas.height = 750;
 
     // Fill background
     ctx.fillStyle = '#0D111C';
@@ -199,13 +199,13 @@ export function CreateInvoiceModal({
 
     // Create larger white background for QR code with padding
     ctx.fillStyle = '#FFFFFF';
-    const qrBackgroundSize = 400; // Was 200
+    const qrBackgroundSize = 400;
     const qrBackgroundX = (canvas.width - qrBackgroundSize) / 2;
     const qrBackgroundY = 50;
     ctx.fillRect(qrBackgroundX, qrBackgroundY, qrBackgroundSize, qrBackgroundSize);
 
     // Draw QR code in the center of white background
-    const qrSize = 300; // Was 200
+    const qrSize = 300;
     const qrX = (canvas.width - qrSize) / 2;
     const qrY = qrBackgroundY + (qrBackgroundSize - qrSize) / 2;
     ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
@@ -213,24 +213,40 @@ export function CreateInvoiceModal({
     // Add text with larger fonts
     ctx.fillStyle = '#FFFFFF';
     ctx.textAlign = 'center';
-    ctx.font = 'bold 30px Inter, system-ui, sans-serif'; // Was 20px
-    ctx.fillText(`${amount} ${toCurrency?.tradingSymbol}`, canvas.width/2, 520); // Was 300
+    ctx.font = 'bold 30px Inter, system-ui, sans-serif';
+    ctx.fillText(`${amount} ${toCurrency?.tradingSymbol}`, canvas.width/2, 520);
 
     ctx.fillStyle = '#5D6785';
-    ctx.font = '24px Inter, system-ui, sans-serif'; // Was 16px
-    ctx.fillText('to', canvas.width/2, 570); // Was 330
+    ctx.font = '24px Inter, system-ui, sans-serif';
+    ctx.fillText('to', canvas.width/2, 570);
 
-    // Break long addresses into multiple lines
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = '21px Inter, system-ui, sans-serif'; // Was 14px
-    
-    const address = destinationIAddress || destinationAddress;
-    let words = address.match(/.{1,30}/g) || [];
-    let y = 620; // Was 360
-    words.forEach(line => {
-      ctx.fillText(line, canvas.width/2, y);
-      y += 30; // Was 20
-    });
+    // Handle address display
+    if (destinationAddress.endsWith('@')) {
+      // Draw VerusID prominently
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 28px Inter, system-ui, sans-serif';
+      ctx.fillText(destinationAddress, canvas.width/2, 620);
+
+      // Draw i-address below in smaller, lighter text
+      ctx.fillStyle = '#5D6785';
+      ctx.font = '21px Inter, system-ui, sans-serif';
+      const words = destinationIAddress?.match(/.{1,30}/g) || [];
+      let y = 660;
+      words.forEach(line => {
+        ctx.fillText(line, canvas.width/2, y);
+        y += 30;
+      });
+    } else {
+      // Regular address display
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '21px Inter, system-ui, sans-serif';
+      const words = destinationAddress.match(/.{1,30}/g) || [];
+      let y = 620;
+      words.forEach(line => {
+        ctx.fillText(line, canvas.width/2, y);
+        y += 30;
+      });
+    }
 
     // Create download link
     const link = document.createElement('a');
@@ -336,9 +352,20 @@ export function CreateInvoiceModal({
                 {amount} {toCurrency?.tradingSymbol}
               </div>
               <div className="text-[#5D6785] text-sm">to</div>
-              <div className="text-white text-sm max-w-[300px] break-all">
-                {destinationIAddress || destinationAddress}
-              </div>
+              {destinationAddress.endsWith('@') ? (
+                <div className="flex flex-col items-center gap-1">
+                  <div className="text-white text-base font-medium">
+                    {destinationAddress}
+                  </div>
+                  <div className="text-[#5D6785] text-sm break-all">
+                    {destinationIAddress}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-white text-sm max-w-[300px] break-all">
+                  {destinationAddress}
+                </div>
+              )}
             </div>
 
             {/* Desktop view */}

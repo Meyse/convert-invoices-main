@@ -15,6 +15,8 @@ interface ActionButtonProps {
   isAddressValid: boolean;
   /** Whether the conversion exceeds available liquidity */
   liquidityExceeded: boolean;
+  /** Whether in "I don't care" mode */
+  iDontCareMode: boolean;
   /** Callback when the button is clicked */
   onClick: () => void;
 }
@@ -22,7 +24,7 @@ interface ActionButtonProps {
 /**
  * A submit button component for the conversion form.
  * Automatically disables itself when:
- * - Source or target currency is not selected
+ * - Source or target currency is not selected (unless in iDontCareMode)
  * - Amount is not entered
  * - Address is invalid
  * - Liquidity is exceeded
@@ -34,9 +36,10 @@ export function ActionButton({
   amount,
   isAddressValid,
   liquidityExceeded,
+  iDontCareMode,
   onClick
 }: ActionButtonProps) {
-  const isDisabled = !fromCurrency || !toCurrency || !amount || !isAddressValid || liquidityExceeded;
+  const isDisabled = (!fromCurrency && !iDontCareMode) || !toCurrency || !amount || !isAddressValid || liquidityExceeded;
 
   return (
     <button
