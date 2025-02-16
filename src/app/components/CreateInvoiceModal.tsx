@@ -13,7 +13,6 @@ import { Currency } from '@/components/CurrencyList';
 interface CreateInvoiceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  fromCurrency?: Currency;
   toCurrency?: Currency;
   amount: string;
   destinationAddress: string;
@@ -59,7 +58,6 @@ const coinsToSats = (amount: number): BN => {
 export function CreateInvoiceModal({
   isOpen,
   onClose,
-  fromCurrency,
   toCurrency,
   amount,
   destinationAddress,

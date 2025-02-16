@@ -117,7 +117,7 @@ export function useCurrencyConversion() {
 
         const filteredCurrencies = currencies.filter(c => c.enabled && availableTokens.has(c.systemName));
         setAvailableToTokens(filteredCurrencies);
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Error fetching available tokens:', error);
         const defaultTokens = currencies.filter(c => c.enabled && ['VRSC'].includes(c.systemName));
         setAvailableToTokens(defaultTokens);

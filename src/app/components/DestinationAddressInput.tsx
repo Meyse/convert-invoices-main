@@ -60,7 +60,6 @@ export function DestinationAddressInput({
   const [isValidating, setIsValidating] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [showValidation, setShowValidation] = useState(false);
-  const [lastValidatedValue, setLastValidatedValue] = useState('');
 
   // Memoize validation function to prevent unnecessary re-renders
   const validate = useCallback(async (address: string) => {
