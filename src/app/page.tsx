@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import '@/buffer-polyfill';
-import { Currency, findCurrencyBySystemName } from '@/components/CurrencyList';
+import { Currency } from '@/components/CurrencyList';
 import { FrequentPairs } from './components/FrequentPairs';
 import { ConversionForm } from './components/ConversionForm';
 import { useCurrencyConversion } from './hooks/useCurrencyConversion';

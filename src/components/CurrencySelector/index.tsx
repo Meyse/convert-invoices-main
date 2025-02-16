@@ -54,7 +54,7 @@ export default function CurrencySelector({
             onClick={() => onToggleIDontCare?.()}
             className="text-xs text-[#838A9E] hover:text-white transition-colors"
           >
-            Don't show
+            Don&apos;t show
           </button>
         )}
       </div>
