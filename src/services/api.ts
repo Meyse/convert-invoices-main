@@ -1,5 +1,5 @@
 import { ConverterResponse, EstimateConversionResponse, ConversionRequest, ConverterCurrency } from '../types/api';
-import { findCurrencyByIAddress, findCurrencyBySystemName, Currency } from '@/components/CurrencyList';
+import { findCurrencyByIAddress, findCurrencyBySystemName } from '@/components/CurrencyList';
 
 const API_URL = 'https://api.verus.services';
 

@@ -19,7 +19,6 @@ interface CreateInvoiceModalProps {
   destinationIAddress?: string;
   liquidityInfo?: {
     maxAvailableAmount?: number;
-    conversionPath?: string[];
   };
 }
 
@@ -81,7 +80,6 @@ export function CreateInvoiceModal({
     console.log('Starting slippage calculation with:', {
       amount: amountNum,
       maxAvailableAmount: liquidityInfo?.maxAvailableAmount,
-      conversionPath: liquidityInfo?.conversionPath
     });
 
     // Calculate slippage based on liquidity ratio
