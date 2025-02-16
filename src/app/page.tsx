@@ -88,8 +88,8 @@ export default function Home() {
           destinationAddress={destinationAddress}
           destinationIAddress={destinationIAddress}
           liquidityInfo={{
-            maxAvailableAmount,
-            conversionPath: [] // TODO: Add conversion path from API
+            maxAvailableAmount
+
           }}
         />
       </main>

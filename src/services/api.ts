@@ -65,7 +65,7 @@ export async function estimateConversion(request: ConversionRequest): Promise<Es
 
   // If either currency is a converter, don't use the via parameter
   if ((fromCurrency?.isConverter || toCurrency?.isConverter) && request.via) {
-    const { via, ...requestWithoutVia } = request;
+    const { /* via, */ ...requestWithoutVia } = request;
     const response = await makeRequest<EstimateConversionResponse['result']>('estimateconversion', [requestWithoutVia]);
     return { result: response.result };
   }
