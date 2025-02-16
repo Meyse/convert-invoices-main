@@ -152,9 +152,7 @@ export function CreateInvoiceModal({
         amount: toSats(parseFloat(amount)),
         destination: new TransferDestination({
           type: destinationIAddress ? DEST_ID : DEST_PKH,
-          destination_bytes: destinationIAddress 
-            ? fromBase58Check(destinationIAddress).hash 
-            : Buffer.from(destinationAddress)
+          destination_bytes: fromBase58Check(destinationIAddress || destinationAddress).hash
         }),
         requestedcurrencyid: toCurrency?.iAddress || "",
         acceptedsystems: [],
