@@ -20,6 +20,12 @@ const currencyIconMap: Record<string, string> = {
   'Bridge.vETH': '/icons/currencies/bridgeveth.svg',
   'Pure': '/icons/currencies/pure.svg',
   'Switch': '/icons/currencies/switch.svg',
+  'Kaiju': '/icons/currencies/kaiju.svg',
+  'USDT': '/icons/currencies/usdt.svg',
+  'USDC': '/icons/currencies/usdc.svg',
+  'EURC': '/icons/currencies/eurc.svg',
+  'scrvUSD': '/icons/currencies/scrvusd.svg',
+  
 };
 
 // Function to get the icon path for a currency
@@ -136,7 +142,7 @@ export const currencies: Currency[] = [
     iAddress: "i4Xr5TAMrDTD99H69EemhjDxJ4ktNskUtc",
     icon: "#",
     isConverter: true,
-    enabled: true
+    enabled: false
   },
   {
     systemName: "SUPERVRSC",
@@ -160,7 +166,7 @@ export const currencies: Currency[] = [
     iAddress: "iCDjBN71SbSppgsNTpwwMBT69399DpV4hA",
     icon: "#",
     isConverter: true,
-    enabled: true
+    enabled: false
   },
   {
     systemName: "pepecoin.vETH",
@@ -168,7 +174,7 @@ export const currencies: Currency[] = [
     iAddress: "i5VVBEi6efBrXMaeqFW3MTPSzbmpNLysGR",
     icon: "#",
     isConverter: false,
-    enabled: true
+    enabled: false
   },
   {
     systemName: "NATI.vETH",

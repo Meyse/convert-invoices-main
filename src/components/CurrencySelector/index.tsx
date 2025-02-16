@@ -59,7 +59,7 @@ export default function CurrencySelector({
         )}
       </div>
       <div className="flex gap-2">
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <AmountInput
             amount={amount}
             onChange={onAmountChange}
@@ -71,7 +71,7 @@ export default function CurrencySelector({
         </div>
         <button
           onClick={() => !isDisabled && setIsOpen(true)}
-          className={buttonStyles}
+          className={`${buttonStyles} shrink-0`}
           disabled={isDisabled}
         >
           {selectedCurrency ? (

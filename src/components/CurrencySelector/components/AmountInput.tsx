@@ -28,7 +28,7 @@ export function AmountInput({
   return (
     <input
       type="text"
-      className={`w-full bg-transparent text-3xl outline-none ${
+      className={`w-full bg-transparent text-3xl outline-none truncate ${
         isDisabled ? 'text-[#5D6785] cursor-not-allowed' : 'text-white'
       }`}
       placeholder="0"

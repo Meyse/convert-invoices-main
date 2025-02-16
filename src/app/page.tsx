@@ -6,7 +6,6 @@ import { Currency, findCurrencyBySystemName } from '@/components/CurrencyList';
 import { FrequentPairs } from './components/FrequentPairs';
 import { ConversionForm } from './components/ConversionForm';
 import { useCurrencyConversion } from './hooks/useCurrencyConversion';
-import { QRModal } from './components/QRModal';
 import { BackgroundGradient } from './components/BackgroundGradient';
 import { CreateInvoiceModal } from './components/CreateInvoiceModal';
 
@@ -51,13 +50,8 @@ export default function Home() {
   return (
     <>
       <BackgroundGradient />
-      <main className="relative flex min-h-screen flex-col items-center p-8 bg-[#0F1013]/95">
-
-
-
-
-
-        <h1 className="text-[48px] tracking-tight text-white mb-8 text-center leading-[56px]">
+      <main className="relative flex min-h-screen flex-col items-center p-0 pt-4 md:p-8 bg-[#0F1013]/95">
+        <h1 className="text-[26px] md:text-[48px] tracking-tight text-white mb-4 text-center leading-[40px] md:leading-[56px] px-4 md:px-0">
           Quick Invoices to<br />Use & Share
         </h1>
 
@@ -85,11 +79,6 @@ export default function Home() {
           iDontCareMode={iDontCareMode}
           onToggleIDontCare={toggleIDontCareMode}
           onIAddressFound={handleIAddressFound}
-        />
-
-        <QRModal
-          isOpen={isQRModalOpen}
-          onClose={() => setIsQRModalOpen(false)}
         />
 
         <CreateInvoiceModal

@@ -4,6 +4,7 @@ import { VerusPayInvoice, VerusPayInvoiceDetails } from "verus-typescript-primit
 import { DEST_PKH, DEST_ID, TransferDestination } from "verus-typescript-primitives";
 import { fromBase58Check } from "verus-typescript-primitives";
 import { HelpCircle, Download } from 'lucide-react';
+import Image from 'next/image';
 
 import BN from "bn.js";
 import { Slider } from './Slider';
@@ -66,8 +67,9 @@ export function CreateInvoiceModal({
   liquidityInfo
 }: CreateInvoiceModalProps) {
   const [step, setStep] = useState<'review' | 'qr'>('review');
-  const [slippage, setSlippage] = useState(0.5);
+  const [showQR, setShowQR] = useState(false);
   const [qrString, setQrString] = useState<string | null>(null);
+  const [slippage, setSlippage] = useState(0.5);
   const [suggestedSlippage, setSuggestedSlippage] = useState(0.5);
   const [priceImpact, setPriceImpact] = useState<number | null>(null);
 
@@ -241,7 +243,7 @@ export function CreateInvoiceModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-[#0D111C] rounded-[24px] p-6 w-full max-w-md">
+      <div className="bg-[#0D111C] md:rounded-[24px] rounded-none p-4 md:p-6 w-full max-w-md md:m-auto m-0 md:h-auto h-full">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-4">
             {step === 'qr' && (
@@ -252,7 +254,7 @@ export function CreateInvoiceModal({
                 ← Back
               </button>
             )}
-            <h2 className="text-xl text-white">
+            <h2 className="text-lg md:text-xl text-white">
               {step === 'review' ? 'Review Invoice' : 'Scan QR Code'}
             </h2>
           </div>
@@ -328,34 +330,78 @@ export function CreateInvoiceModal({
             </button>
           </div>
         ) : (
-          <div className="flex flex-col items-center space-y-6">
-            {qrString && (
-              <>
-                <div className="bg-white p-4 rounded-lg">
-                  <QRCodeCanvas
-                    value={qrString}
-                    size={200}
-                    level="H"
-                  />
-                </div>
-                <div className="flex flex-col items-center gap-2 text-center">
-                  <div className="text-white text-lg font-medium">
-                    {amount} {toCurrency?.tradingSymbol}
+          <div className="flex flex-col space-y-6">
+            <div className="flex flex-col items-center gap-2 text-center">
+              <div className="text-white text-lg font-medium">
+                {amount} {toCurrency?.tradingSymbol}
+              </div>
+              <div className="text-[#5D6785] text-sm">to</div>
+              <div className="text-white text-sm max-w-[300px] break-all">
+                {destinationIAddress || destinationAddress}
+              </div>
+            </div>
+
+            {/* Desktop view */}
+            <div className="hidden md:flex flex-col items-center gap-4">
+              <div className="bg-white p-4 rounded-lg">
+                <QRCodeCanvas
+                  value={qrString || ''}
+                  size={200}
+                  level="H"
+                />
+              </div>
+              <button
+                onClick={handleSaveImage}
+                className="flex items-center gap-2 bg-[#090A0E] hover:bg-[#131A2A] text-white px-4 py-4 rounded-[20px] font-medium"
+              >
+                <Download size={16} />
+                Save to share
+              </button>
+            </div>
+
+            {/* Mobile view */}
+            <div className="flex md:hidden flex-col gap-4 w-full mt-4">
+              <a
+                href={qrString || '#'}
+                className="w-full bg-white hover:bg-white/90 text-black rounded-[20px] py-4 px-4 font-medium text-center flex items-center justify-center gap-2"
+              >
+                <Image
+                  src="/icons/currencies/verus-icon-blue.svg"
+                  alt="Verus"
+                  width={20}
+                  height={20}
+                />
+                Pay with Verus Mobile
+              </a>
+
+              <button
+                onClick={handleSaveImage}
+                className="w-full bg-[#090A0E] hover:bg-[#131A2A] text-white px-4 py-4 rounded-[20px] font-medium flex items-center justify-center gap-2"
+              >
+                <Download size={16} />
+                Save to share
+              </button>
+              
+              <button
+                onClick={() => setShowQR(!showQR)}
+                className="w-full bg-[#090A0E] hover:bg-[#131A2A] text-white px-4 py-4 rounded-[20px] font-medium flex items-center justify-center gap-2"
+              >
+                {showQR ? 'Hide QR Code' : 'Show QR Code'}
+              </button>
+
+              {/* Mobile QR section */}
+              {showQR && qrString && (
+                <div className="flex flex-col items-center gap-4">
+                  <div className="bg-white p-4 rounded-lg">
+                    <QRCodeCanvas
+                      value={qrString}
+                      size={200}
+                      level="H"
+                    />
                   </div>
-                  <div className="text-[#5D6785] text-sm">to</div>
-                  <div className="text-white text-sm max-w-[300px] break-all">
-                    {destinationIAddress || destinationAddress}
-                  </div>
                 </div>
-                <button
-                  onClick={handleSaveImage}
-                  className="flex items-center gap-2 bg-[#090A0E] hover:bg-[#131A2A] text-white px-4 py-2 rounded-lg"
-                >
-                  <Download size={16} />
-                  Save to share
-                </button>
-              </>
-            )}
+              )}
+            </div>
           </div>
         )}
       </div>
