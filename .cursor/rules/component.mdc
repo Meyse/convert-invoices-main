@@ -1,9 +1,14 @@
 ---
-description:
-globs:
+description: Component creation
+globs: 
 ---
 
 # Your rule content
 
-- You can @ files here
-- You can use markdown but dont have to
+General Component Design Rules
+
+Keep components small and focused - if they exceed 100 lines, break them down.
+Give each component a single clear responsibility.
+Extract commonly used UI elements into reusable components.
+Keep state management close to where the state is used.
+Maintain clear separation between UI and business logic.

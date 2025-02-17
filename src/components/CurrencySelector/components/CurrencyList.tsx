@@ -8,9 +8,9 @@ export function CurrencyList({ currencies, onSelect, isLoading }: CurrencyListPr
       <div className="space-y-2">
         {[1, 2, 3].map(i => (
           <div key={i} className="animate-pulse flex items-center gap-2 p-2">
-            <div className="w-8 h-8 bg-[#282B33] rounded-full"></div>
+            <div className="w-8 h-8 bg-[#131A2A] rounded-full"></div>
             <div className="flex-1">
-              <div className="h-4 bg-[#282B33] rounded w-20"></div>
+              <div className="h-4 bg-[#131A2A] rounded w-20"></div>
             </div>
           </div>
         ))}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { CheckCircle2, XCircle } from 'lucide-react';
+import { fromBase58Check } from "verus-typescript-primitives"
 
 /**
  * Props for the DestinationAddressInput component
@@ -31,7 +32,7 @@ async function validateVerusId(verusId: string): Promise<{ isValid: boolean; iAd
     });
 
     const data = await response.json();
-    
+
     if (data.error) {
       return { isValid: false };
     }
@@ -71,7 +72,15 @@ export function DestinationAddressInput({
     }
 
     // Skip API validation if it's a regular R-address
-    if (address.length === 34) {
+    if (address.length === 34 || address.length === 33) {
+      try {
+        fromBase58Check(address);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
+        setIsValid(false);
+        onValidityChange(false);
+        return;
+      }
       setIsValid(true);
       setShowValidation(true);
       onValidityChange(true);
@@ -82,9 +91,9 @@ export function DestinationAddressInput({
     if (address.endsWith('@')) {
       setIsValidating(true);
       setShowValidation(true);
-      
+
       const { isValid, iAddress } = await validateVerusId(address);
-      
+
       if (isValid && iAddress) {
         setIsValid(true);
         onValidityChange(true);
@@ -93,7 +102,7 @@ export function DestinationAddressInput({
         setIsValid(false);
         onValidityChange(false);
       }
-      
+
       setIsValidating(false);
     } else {
       setIsValid(false);
@@ -108,8 +117,7 @@ export function DestinationAddressInput({
     onChange(newValue);
 
     // Show validation immediately for R-addresses
-    if (newValue.length === 34) {
-      setIsValid(true);
+    if (newValue.length === 34 || newValue.length === 33) {
       setShowValidation(true);
       onValidityChange(true);
       onIAddressFound?.(undefined); // Clear any stored i-address
