@@ -162,7 +162,7 @@ export const currencies: Currency[] = [
     tradingSymbol: "SUPERVRSC",
     iAddress: "iHnYAmrS45Hb8GVgyzy7nVQtZ5vttJ9N3X",
     icon: "#",
-    isConverter: false,
+    isConverter: true,
     enabled: true,
     decimals: 8
   },
@@ -217,7 +217,7 @@ export const currencies: Currency[] = [
     iAddress: "iExBJfZYK7KREDpuhj6PzZBzqMAKaFg7d2",
     icon: "#",
     isConverter: false,
-    enabled: false,
+    enabled: true,
     decimals: 8
   },
   {
@@ -226,7 +226,7 @@ export const currencies: Currency[] = [
     iAddress: "iHog9UCTrn95qpUBFCZ7kKz7qWdMA8MQ6N",
     icon: "#",
     isConverter: false,
-    enabled: false,
+    enabled: true,
     decimals: 8
   },
   {
@@ -290,6 +290,24 @@ export const currencies: Currency[] = [
     icon: "#",
     isConverter: true,
     enabled: false,
+    decimals: 8
+  },
+  {
+    systemName: "SUPER🛒",
+    tradingSymbol: "SUPER🛒",
+    iAddress: "iFrFn9b6ctse7XBzcWkRbpYMAHoKjbYKqG",
+    icon: "#",
+    isConverter: true,
+    enabled: true,
+    decimals: 8
+  },
+  {
+    systemName: "CHIPS",
+    tradingSymbol: "CHIPS",
+    iAddress: "iJ3WZocnjG9ufv7GKUA4LijQno5gTMb7tP",
+    icon: "#",
+    isConverter: false,
+    enabled: true,
     decimals: 8
   }
 ];
